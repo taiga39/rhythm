@@ -5,18 +5,15 @@ var cnt;
  
 var x = canvas.width/2;
 var dx = 0;
-var moji1 = 0
-var moji2 = 0
-var moji3 = 0
-var moji4 = 0
 var cases
+var speed = 7.5
 var trueball1 = new Array
 var trueball2 = new Array
 var trueball3 = new Array
 var trueball4 = new Array
 
 var datas
-
+var miss = 0
 function getJSON() {
 	var req = new XMLHttpRequest();						// XMLHttpRequest オブジェクトを生成する
 	req.onreadystatechange = function() {				// XMLHttpRequest オブジェクトの状態が変化した際に呼び出されるイベントハンドラ
@@ -30,12 +27,13 @@ function getJSON() {
 getJSON()
 
 class Note {
-	constructor(y,casen) {
+	constructor(sec,casen) {
         var xy = 0
         this.cases = casen
         this.delete = false
+        this.end = false
         context.beginPath();
-        this.xz = y
+        this.xz = 490 - (sec * speed * 60)
         context.rect(xy, this.xz, 50, 10);
         context.fillStyle = "#0095DD";
         context.fill();
@@ -45,58 +43,56 @@ class Note {
         this.xz = this.xz + x;
     }
     draw(){
-        this.xz += 7.5
-
-        var xy
-        if(this.cases == 1){
-            xy = 75+810/5*1
-        }
-        if(this.cases == 2){
-            xy = 75+810/5*2
-        }
-        if(this.cases == 3){
-            xy = 75+810/5*3
-        }
-        if(this.cases == 4){
-            xy = 75+810/5*4
-        }
-        var color = "#0095DD";
-        // if(this.xz > trueball1 && this.xz < 600 && this.cases == 1){
-        //     trueball1 = this.xz
-        // }else if(this.xz > 600 && this.cases == 1){
-        //     // notes = notes.filter(n => n !== this);
-        //     trueball1 = 0
-        // }
-        if(this.xz > 0 && this.xz <= 510 && this.cases == 2){
-            trueball2.push(this)
-        }
-        // if(this.xz > trueball3 && this.xz < 600 && this.cases == 3){
-        //     trueball3 = this.xz
-        // }else if(this.xz > 600 && this.cases == 3){
-        //     // notes = notes.filter(n => n !== this);
-        //     trueball3 = 0
-        // }
-        // if(this.xz > trueball4 && this.xz < 600 && this.cases == 4){
-        //     trueball4 = this.xz
-        // }else if(this.xz > 750 && this.cases == 4){
-        //     // notes = notes.filter(n => n !== this);
-        //     trueball4 = 0
-        // }
-        if((this.xz < 750 || this.xz > -50)&& this.delete == false){
-        context.beginPath();
-        context.arc(xy, this.xz, 25, 0, 2 * Math.PI);
-        context.fillStyle = color
-        context.fill();
-        context.closePath();
+        if(this.xz < 541 ){
+            this.xz += speed
+            var xy
+            if(this.cases == 1){
+                xy = 75+810/5*1
+            }
+            if(this.cases == 2){
+                xy = 75+810/5*2
+            }
+            if(this.cases == 3){
+                xy = 75+810/5*3
+            }
+            if(this.cases == 4){
+                xy = 75+810/5*4
+            }
+            var color = "#0095DD";
+            if(this.xz > 0 && this.xz <= 505 && this.cases == 1){
+                trueball1.push(this)
+            }
+            if(this.xz > 0 && this.xz <= 505 && this.cases == 2){
+                trueball2.push(this)
+            }
+            if(this.xz > 0 && this.xz <= 505 && this.cases == 3){
+                trueball3.push(this)
+            }
+            if(this.xz > 0 && this.xz <= 505 && this.cases == 4){
+                trueball4.push(this)
+            }
+            if((this.xz < 750 || this.xz > -50)&& this.delete == false){
+            context.beginPath();
+            context.rect(xy-30, this.xz,60 ,20);
+            context.fillStyle = "#00ff00"
+            context.fill();
+            context.closePath();
+            }
+            if(this.delete == true){
+                this.end =true
+            }
+        }else if(this.xz > 541 && this.end == false){
+            miss++
+            this.end = true
         }
     }
 }
 var ya
 var can
-var notes = Array(500);
+var notes = Array(2);
 function make(){
     for(var i = 0;i < datas.length;i++) {
-        ya = datas[i]["y"]
+        ya = datas[i]["second"]
         can = datas[i]["cases"]
 
         this.notes[i] = new Note(ya,can);
@@ -119,158 +115,266 @@ function init() {
     make()
     draw()
 }
-
-// console.log((50*750/540))
-function drawdaikei(){
-    // context.beginPath();
-    // context.moveTo(445,0);
-    // context.lineTo(515,0);
-    // context.lineTo(885,540); 
-    // context.lineTo(75,540);
-    // context.closePath();
-    // context.strokeStyle = "rgb(0,0,0)";
-    // context.stroke();
-    // context.fillStyle="rgba(0,0,255,0.4)";
-    // context.fill();
-}
-function mojidraw() {
-    if(moji1 >= -200 && moji1 <= -170){
-        context.fillStyle = "blue";
-        context.fillText('Exelent', 20, 50);
-    }
-    // else if(moji1 >= -150 && moji1 <= -120){
-    //     context.fillStyle = "blue";
-    //     context.fillText('Good', 20, 50);
-    // }
-}
-var nami1 = 0
-function nami(){
-    context.beginPath();
-    // context.globalAlpha = 0.5;
-    context.rect((75+810/5*1)-25, 400,50 ,60);
-    context.fill();
-    context.closePath();
-}
 function draw() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.beginPath();
-    context.rect(0, 480, 960,10);
-    context.fillStyle = "yellow";
-    context.fill();
-    context.closePath();
-
-    context.beginPath();
-    context.rect(0, 480, 960,10);
-    context.fillStyle = "yellow";
+    context.globalAlpha = 0.5;
+    context.rect(0, 490, 960,20);
+    context.fillStyle = "#00ff00";
     context.fill();
     context.closePath();
     
     context.beginPath();
-    context.rect((75+810/5*1)-30, 480, 60,10);
-    context.fillStyle = "blue";
+    context.globalAlpha = 1;
+    context.rect((75+810/5*1)-30, 490, 60,20);
+    context.fillStyle = "white";
     context.fill();
     context.closePath();
 
     context.beginPath();
-    context.rect((75+810/5*2)-30, 480, 60,10);
-    context.fillStyle = "blue";
+    context.rect((75+810/5*2)-30, 490, 60,20);
+    context.fillStyle = "white";
     context.fill();
     context.closePath();
 
     context.beginPath();
-    context.rect((75+810/5*3)-30, 480, 60,10);
-    context.fillStyle = "blue";
+    context.rect((75+810/5*3)-30, 490, 60,20);
+    context.fillStyle = "white";
     context.fill();
     context.closePath();
 
     context.beginPath();
-    context.rect((75+810/5*4)-30, 480, 60,10);
-    context.fillStyle = "blue";
+    context.rect((75+810/5*4)-30, 490, 60,20);
+    context.fillStyle = "white";
     context.fill();
     context.closePath();
+}
+var moji1 = false
+var moji2 = false
+var moji3 = false
+var moji4 = false
+var good1 = false
+var good2 = false
+var good3 = false
+var good4 = false
+var goodn = 0
 
-    // context.beginPath();
-    // context.arc(50, 475, 25, 0, 2 * Math.PI);
-    // context.fillStyle = "red"
-    // context.fill();
-    // context.closePath();
+function mojidraw(n) {
+    var mx 
+    if(n == 1){
+        mx = (75+810/5*1)-30
+    }else if(n == 2){
+        mx = (75+810/5*2)-30
+    }else if(n == 3){
+        mx = (75+810/5*3)-30
+    }else if(n ==4){
+        mx = (75+810/5*4)-30
+    }
 
-    // context.beginPath();
-    // context.arc(150, 485, 25, 0, 2 * Math.PI);
-    // context.fillStyle = "red"
-    // context.fill();
-    // context.closePath();
+    if(good1 == true){
+        context.beginPath();
+        context.globalAlpha = 0.6;
+        context.rect(mx, 540, 60,-540);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+        context.beginPath();
+        context.globalAlpha = 1;
+        context.rect(mx, 490, 60,20);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+    }
+    else if(good2 == true){
+        context.beginPath();
+        context.globalAlpha = 0.6;
+        context.rect(mx, 540, 60,-540);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+        context.beginPath();
+        context.globalAlpha = 1;
+        context.rect(mx, 490, 60,20);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+    }
+    else if(good3 == true){
+        context.beginPath();
+        context.globalAlpha = 0.6;
+        context.rect(mx, 540, 60,-540);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+        context.beginPath();
+        context.globalAlpha = 1;
+        context.rect(mx, 490, 60,20);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+    }
+    else if(good4 == true){
+        context.beginPath();
+        context.globalAlpha = 0.6;
+        context.rect(mx, 540, 60,-540);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+        context.beginPath();
+        context.globalAlpha = 1;
+        context.rect(mx, 490, 60,20);
+        context.fillStyle = "red";
+        context.fill();
+        context.closePath();
+    }
+    else{
+        context.beginPath();
+        context.globalAlpha = 0.4;
+        context.rect(mx, 540, 60,-540);
+        context.fillStyle = "white";
+        context.fill();
+        context.closePath();
 
-    // context.beginPath();
-    // context.arc(150, 495, 25, 0, 2 * Math.PI);
-    // context.fillStyle = "red"
-    // context.fill();
-    // context.closePath();
+        context.beginPath();
+        context.globalAlpha = 1;
+        context.rect(mx, 490, 60,20);
+        context.fillStyle = "black";
+        context.fill();
+        context.closePath();
+    }
+}
 
-
-    context.beginPath();
-    context.arc(200, 510, 25, 0, 2 * Math.PI);
-    context.fillStyle = "red"
-    context.fill();
-    context.closePath();
-    // mojidraw()
-
+function nicegood(){
+    let pix = 28
+    if(num < 30){
+        context.font =  pix + "px serif";
+        context.globalAlpha = 0.8;
+        context.fillStyle = "white";
+        context.fillText("good", 300, 440);
+    }
+    num++
+    if(num == 31){
+        num1 = 0
+    }
+    // console.log(num)
 }
 function main() {
     trueball2 = new Array
     draw()
-    raka()
-    drawdaikei()
-    if(nami1 < 90 && nami1 > 0){
-        nami1 = nami1 + 3
-        nami()
-    }else{
-        nami1 = 0
-
+    if(moji1 == true){
+        mojidraw(1)
+    }else if(good1 == true){
+        mojidraw(1)
     }
-    cnt++
-    moji1++
-    moji2++
-    moji3++
-    moji4++
 
+    if(moji2 == true){
+        mojidraw(2)
+    }else if(good2 == true){
+        mojidraw(2)
+    }
+
+    if(moji3 == true){
+        mojidraw(3)
+    }else if(good3 == true){
+        mojidraw(3)
+    }
+
+    if(moji4 == true){
+        mojidraw(4)
+    }else if(good4 == true){
+        mojidraw(4)
+    }
+    raka()
+    console.log(miss)
+    cnt++
 }
+
+var keytrue1 = false
+var keytrue2 = false
+var keytrue3 = false
+var keytrue4 = false
+
 document.onkeydown = pressFunction;
-var keyStatus = {};
-function pressFunction(e)
-{
+function pressFunction(e){
   if(e.keyCode == 68)
   {
-    console.log(trueball1)
-    nami()
-    // if(trueball1[0].xz < 600 && 500 < trueball1[0].xz){
-    //     moji1 = -200
-    // }
-    
+    if(trueball1.length != 0 && keytrue1 != true){
+        if(trueball1[0].xz > 210 && trueball1[0].xz < 550 ){
+            trueball1[0].delete = true
+            good1 = true
+        }
+        keytrue1 = false
+    }else{
+        keytrue1 = true
+    }
+    moji1 = true
   }
   if (e.keyCode == 70) 
   {
-    trueball2[0].delete = true 
-    console.log(trueball2[0].xz)
-    // console.log(notes[0].xz)
-
+    if(trueball2.length != 0 && keytrue2 != true){
+        if(trueball2[0].xz > 210 && trueball2[0].xz < 550 ){
+            trueball2[0].delete = true
+            good2 = true
+        }
+        keytrue2 = false
+    }else{
+        keytrue2 = true
+    }
+    moji2 = true
   }
+
   if (e.keyCode == 74)
   {
-    console.log(trueball3)
-
+    if(trueball3.length != 0 && keytrue3 != true){
+        if(trueball3[0].xz > 210 && trueball3[0].xz < 550 ){
+            trueball3[0].delete = true
+            good3 = true
+        }
+        keytrue3 = false
+    }else{
+        keytrue3 = true
+    }
+    moji3 = true
   }
+
   if (e.keyCode == 75)
   {
-    console.log(trueball4)
-
+    if(trueball4.length != 0 && keytrue4 != true){
+        if(trueball4[0].xz > 210 && trueball4[0].xz < 550 ){
+            trueball4[0].delete = true
+            good4 = true
+        }
+        keytrue4 = false
+    }else{
+        keytrue4 = true
+    }
+    moji4 = true
   }
-
 }
+document.onkeyup = upFunction;
 
-// init();
-// setInterval(main,1000/60)
+function upFunction(e){
+    if(e.keyCode == 68){
+        moji1 = false
+        good2 = false
+    }
 
+    if(e.keyCode == 70){
+        moji2 = false
+        good2 = false
+        keytrue2 = false
+    }
+    if (e.keyCode == 74)
+    {
+        moji3 = false
+        good3 = false
+    }
+    if (e.keyCode == 75)
+    {
+        moji4 = false
+        good4 = false
+    }
+}
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -281,6 +385,7 @@ function onYouTubeIframeAPIReady() {
     height: '540',
     width: '960',
     videoId: 'okukS-aW_60',
+    // videoId: 'iHGk-l0lu1M',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
