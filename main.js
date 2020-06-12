@@ -350,9 +350,9 @@ document.onkeyup = upFunction;
 function upFunction(e){
     if(e.keyCode == 68){
         moji1 = false
-        good2 = false
+        good1 = false
         keytrue1 = false
-
+        console.log(good1 )
     }
 
     if(e.keyCode == 70){
