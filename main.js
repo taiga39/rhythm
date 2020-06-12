@@ -84,6 +84,7 @@ class Note {
         }else if(this.xz > 541 && this.end == false){
             miss++
             this.end = true
+            misstype()
         }
     }
 }
@@ -99,6 +100,15 @@ function make(){
     }
 }
 
+function drawmoji() {
+    if(cnt % 10 == 0){
+        context.font = "48px serif";
+        context.fillText("Hello world", 10, 50);
+    }else{
+    context.font = "22px serif";
+    context.fillText("Hello world", 10, 50);
+    }
+}
 
 
 function raka(){
@@ -149,6 +159,15 @@ function draw() {
     context.fill();
     context.closePath();
 }
+
+function misstype(){
+    context.beginPath();
+    context.globalAlpha = 0.8;
+    context.rect(0,0,960,540);
+    context.fillStyle = "red";
+    context.fill();
+    context.closePath();
+}
 var moji1 = false
 var moji2 = false
 var moji3 = false
@@ -173,57 +192,57 @@ function mojidraw(n) {
 
     if(good1 == true){
         context.beginPath();
-        context.globalAlpha = 0.6;
+        context.globalAlpha = 0.4;
         context.rect(mx, 540, 60,-540);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
         context.beginPath();
         context.globalAlpha = 1;
         context.rect(mx, 490, 60,20);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
     }
     else if(good2 == true){
         context.beginPath();
-        context.globalAlpha = 0.6;
+        context.globalAlpha = 0.4;
         context.rect(mx, 540, 60,-540);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
         context.beginPath();
         context.globalAlpha = 1;
         context.rect(mx, 490, 60,20);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
     }
     else if(good3 == true){
         context.beginPath();
-        context.globalAlpha = 0.6;
+        context.globalAlpha = 0.4;
         context.rect(mx, 540, 60,-540);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
         context.beginPath();
         context.globalAlpha = 1;
         context.rect(mx, 490, 60,20);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
     }
     else if(good4 == true){
         context.beginPath();
-        context.globalAlpha = 0.6;
+        context.globalAlpha = 0.4;
         context.rect(mx, 540, 60,-540);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
         context.beginPath();
         context.globalAlpha = 1;
         context.rect(mx, 490, 60,20);
-        context.fillStyle = "red";
+        context.fillStyle = "#00ff00";
         context.fill();
         context.closePath();
     }
@@ -244,49 +263,30 @@ function mojidraw(n) {
     }
 }
 
-function nicegood(){
-    let pix = 28
-    if(num < 30){
-        context.font =  pix + "px serif";
-        context.globalAlpha = 0.8;
-        context.fillStyle = "white";
-        context.fillText("good", 300, 440);
-    }
-    num++
-    if(num == 31){
-        num1 = 0
-    }
-    // console.log(num)
-}
 function main() {
+    trueball1 = new Array
     trueball2 = new Array
+    trueball3 = new Array
+    trueball4 = new Array
     draw()
     if(moji1 == true){
-        mojidraw(1)
-    }else if(good1 == true){
         mojidraw(1)
     }
 
     if(moji2 == true){
         mojidraw(2)
-    }else if(good2 == true){
-        mojidraw(2)
     }
 
     if(moji3 == true){
-        mojidraw(3)
-    }else if(good3 == true){
         mojidraw(3)
     }
 
     if(moji4 == true){
         mojidraw(4)
-    }else if(good4 == true){
-        mojidraw(4)
     }
     raka()
-    console.log(miss)
     cnt++
+    // drawmoji()
 }
 
 var keytrue1 = false
@@ -303,10 +303,8 @@ function pressFunction(e){
             trueball1[0].delete = true
             good1 = true
         }
-        keytrue1 = false
-    }else{
-        keytrue1 = true
     }
+    keytrue1 = true
     moji1 = true
   }
   if (e.keyCode == 70) 
@@ -315,11 +313,10 @@ function pressFunction(e){
         if(trueball2[0].xz > 210 && trueball2[0].xz < 550 ){
             trueball2[0].delete = true
             good2 = true
+            drawmoji()
         }
-        keytrue2 = false
-    }else{
-        keytrue2 = true
     }
+    keytrue2 = true
     moji2 = true
   }
 
@@ -330,10 +327,8 @@ function pressFunction(e){
             trueball3[0].delete = true
             good3 = true
         }
-        keytrue3 = false
-    }else{
-        keytrue3 = true
     }
+    keytrue3 = true
     moji3 = true
   }
 
@@ -344,10 +339,9 @@ function pressFunction(e){
             trueball4[0].delete = true
             good4 = true
         }
-        keytrue4 = false
-    }else{
-        keytrue4 = true
+        console.log(trueball4[0])
     }
+    keytrue4 = true
     moji4 = true
   }
 }
@@ -357,6 +351,8 @@ function upFunction(e){
     if(e.keyCode == 68){
         moji1 = false
         good2 = false
+        keytrue1 = false
+
     }
 
     if(e.keyCode == 70){
@@ -368,11 +364,15 @@ function upFunction(e){
     {
         moji3 = false
         good3 = false
+        keytrue3 = false
+
     }
     if (e.keyCode == 75)
     {
         moji4 = false
         good4 = false
+        keytrue4 = false
+
     }
 }
 var tag = document.createElement('script');
@@ -384,8 +384,8 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '540',
     width: '960',
-    videoId: 'okukS-aW_60',
-    // videoId: 'iHGk-l0lu1M',
+    // videoId: 'okukS-aW_60',
+    videoId: 'iHGk-l0lu1M',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
