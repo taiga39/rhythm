@@ -4,18 +4,24 @@
 	<meta charset = "utf-8">
 	<title>音ゲー</title>
 	<link href="/style.css" type="text/css" rel="stylesheet">
-
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
 </head>
 <body>
-	<div style="position:absolute;top:0;left:0;z-index:2">
-		<canvas id="canvas" width = "960" height = "540">
-		</canvas>
-	</div>
-	<div id="player" style="position:absolute;top:0;left:0;z-index:1">
-		<!-- <iframe width="960" height="540" src="https://www.youtube.com/embed/okVjwGdXB98" frameborder="0" autoplay; allowfullscreen></iframe> -->
-	</div>
-	<button style="position:absolute;top:600px;left:0;z-index:1" onclick="start()">aaa</div>
-	<script src = "main.json"></script>
-	<script src = "main.js"></script>
+    <header></header>
+	<button id="start" style="position:absolute;z-index:4;color:red;margin:0 auto;left:0;right:0;width:10vw;height:10vh;background:white;text-align:center;line-height:10vh;" onclick="start()">start</button>
+    <footer></footer>
+    <script src = "/top.js"></script>
 </body>
 </html>
+
+<script>
+
+document.onkeydown = pressFunction;
+var cnt = 0
+function pressFunction(e){
+    cnt++
+    console.log(cnt)
+}
+</script>

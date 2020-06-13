@@ -1,0 +1,24 @@
+<!DOCTYPE html5>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>音ゲー</title>
+	<link href="/style.css" type="text/css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+	<div style="position:relative;z-index:2;" id="content">
+		<canvas id="canvas" style="margin:0 auto;z-index:2;position:absolute;left:0;right:0;">
+		</canvas>
+		<div id="player" style="margin:0 auto;position:absolute;top:0;left:0;right:0;z-index:1">
+		</div>
+		<div id="buttons">
+		</div>
+		<button id="start" style="position:absolute;z-index:4;color:red;margin:0 auto;left:0;right:0;width:10vw;height:10vh;background:white;text-align:center;line-height:10vh;" onclick="start()">start</button>
+	</div>
+	<script src = "/main.js"></script>
+</body>
+</html>
