@@ -1,10 +1,64 @@
 [
-    {"second":3.5,"cases":1},
-    {"second":3.6,"cases":2},
-    {"second":3.9,"cases":3},
-    {"second":4.3,"cases":4},
-    {"second":4,"cases":1},
-    {"second":4.6,"cases":3}
+    {
+        "second":3.7
+        ,"cases": 1
+    },
+    {
+        "second":3.7,
+        "cases": 2
+    },
+    {
+        "second":4.57,
+        "cases": 2
+    },
+    {
+        "cases": 2,
+        "second": 11.166666666666666
+      },
+      {
+        "cases":2,
+        "second": 11.616666666666667
+      },
+      {
+        "cases": 1,
+        "second": 12.05
+      },
+      {
+        "cases":2,
+        "second": 12.233333333333334
+      },
+      {
+        "cases": 1,
+        "second": 12.5
+      },
+      {
+        "cases": 2,
+        "second": 12.966666666666667
+      },
+      {
+        "cases": 2,
+        "second": 13.35
+      },
+      {
+        "cases": 1,
+        "second": 13.783333333333333
+      },
+      {
+        "cases": 2,
+        "second": 13.966666666666667
+      },
+      {
+        "cases":2,
+        "second": 14.2
+      },
+      {
+        "cases": 1,
+        "second": 14.65
+      },
+      {
+        "cases":2,
+        "second": 15.066666666666666
+      }
 ]
 
 

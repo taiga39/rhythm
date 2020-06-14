@@ -42,7 +42,7 @@ var cnt;
 var x = canvas.width/2;
 var dx = 0;
 var cases
-var speed = 8
+var speed = 2
 var trueball1 = new Array
 var trueball2 = new Array
 var trueball3 = new Array
@@ -80,7 +80,7 @@ class Note {
         this.xz = this.xz + x;
     }
     draw(){
-        if(this.xz < canvas.width+1 ){
+        if(this.xz <= canvas.height ){
             this.xz += speed
             var xy
             if(this.cases == 1){
@@ -96,35 +96,33 @@ class Note {
                 xy = pos4
             }
             var color = "#0095DD";
-            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 1){
+            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 1&& this.delete == false){
                 trueball1.push(this)
             }
-            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 2){
+            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 2&& this.delete == false){
                 trueball2.push(this)
             }
-            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 3){
+            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 3&& this.delete == false){
                 trueball3.push(this)
             }
-            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 4){
+            if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 4&& this.delete == false){
                 trueball4.push(this)
             }
-            if((this.xz < (canvas.height*750/540) || this.xz > -(canvas.height*50/540))&& this.delete == false){
+            if((this.xz < (canvas.height*540/540) || this.xz > -(canvas.height*50/540))&& this.delete == false){
             context.beginPath();
             context.rect(xy-(canvas.width*30/960), this.xz,(canvas.width*60/960) ,(canvas.height*20/540));
             context.fillStyle = "#00ff00"
             context.fill();
             context.closePath();
             }
-            if(this.delete == true){
-                this.end =true
-            }
-        }else if(this.xz > canvas.height+1 && this.end == false){
+        }else if(this.xz > canvas.height && this.end != true && this.delete != true){
             miss++
             combo = 0
             this.end = true
         }
     }
 }
+
 var ya
 var can
 var notes = Array();
@@ -333,16 +331,17 @@ var keytrue3 = false
 var keytrue4 = false
 
 startb = document.getElementById("start")
-startb.style.bottom = canvas.height/2 + "px"
+startb.style.bottom = canvas.height/2+ "px"
 startb.addEventListener("click", function() {
     startb.style.display  = "none"
 })
 document.onkeydown = pressFunction;
 function pressFunction(e){
+    // console.log(cnt/60+10)
   if(e.keyCode == 68)
   {
     if(trueball1.length != 0 && keytrue1 != true){
-        if(trueball1[0].xz > canvas.height/2 && trueball1[0].xz < canvas.height ){
+        if(trueball1[0].xz > canvas.height-100 && trueball1[0].xz < canvas.height ){
             trueball1[0].delete = true
             good1 = true
             combo = combo+1
@@ -354,7 +353,7 @@ function pressFunction(e){
   if (e.keyCode == 70) 
   {
     if(trueball2.length != 0 && keytrue2 != true){
-        if(trueball2[0].xz > canvas.height/2 && trueball2[0].xz < canvas.height ){
+        if(trueball2[0].xz > canvas.height-100&& trueball2[0].xz < canvas.height ){
             trueball2[0].delete = true
             good2 = true
             combo = combo+1
@@ -367,7 +366,7 @@ function pressFunction(e){
   if (e.keyCode == 74)
   {
     if(trueball3.length != 0 && keytrue3 != true){
-        if(trueball3[0].xz > canvas.height/2 && trueball3[0].xz < canvas.height ){
+        if(trueball3[0].xz > canvas.height-100&& trueball3[0].xz < canvas.height ){
             trueball3[0].delete = true
             good3 = true
             combo = combo+1
@@ -380,7 +379,7 @@ function pressFunction(e){
   if (e.keyCode == 75)
   {
     if(trueball4.length != 0 && keytrue4 != true){
-        if(trueball4[0].xz > canvas.height/2 && trueball4[0].xz < canvas.height ){
+        if(trueball4[0].xz > canvas.height-100&& trueball4[0].xz < canvas.height ){
             trueball4[0].delete = true
             good4 = true
             combo = combo+1
@@ -436,7 +435,7 @@ function onYouTubeIframeAPIReady() {
     },
     playerVars:{
         // start:10,
-        end:26
+        end:20
     }
   });
 }
@@ -474,7 +473,7 @@ if(sp === true){
         if(n == 1)
         {
           if(trueball1.length != 0 && keytrue1 != true){
-              if(trueball1[0].xz > canvas.height/2 && trueball1[0].xz < canvas.height ){
+              if(trueball1[0].xz > canvas.height-100 && trueball1[0].xz < canvas.height ){
                   trueball1[0].delete = true
                   good1 = true
                   combo = combo+1
@@ -486,7 +485,7 @@ if(sp === true){
         if (n == 2) 
         {
           if(trueball2.length != 0 && keytrue2 != true){
-              if(trueball2[0].xz > canvas.height/2 && trueball2[0].xz < canvas.height ){
+              if(trueball2[0].xz > canvas.height-100&& trueball2[0].xz < canvas.height ){
                   trueball2[0].delete = true
                   good2 = true
                   combo = combo+1
@@ -499,7 +498,7 @@ if(sp === true){
         if (n == 3)
         {
           if(trueball3.length != 0 && keytrue3 != true){
-              if(trueball3[0].xz > canvas.height/2 && trueball3[0].xz < canvas.height ){
+              if(trueball3[0].xz > canvas.height-100&& trueball3[0].xz < canvas.height ){
                   trueball3[0].delete = true
                   good3 = true
                   combo = combo+1
@@ -512,7 +511,7 @@ if(sp === true){
         if (n == 4)
         {
           if(trueball4.length != 0 && keytrue4 != true){
-              if(trueball4[0].xz > canvas.height/2 && trueball4[0].xz < canvas.height ){
+              if(trueball4[0].xz > canvas.height-100&& trueball4[0].xz < canvas.height ){
                   trueball4[0].delete = true
                   good4 = true
                   combo = combo+1
