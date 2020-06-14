@@ -50,7 +50,7 @@ var trueball4 = new Array
 
 var datas
 var miss = 0
-var combo = false
+var combo = 0
 function getJSON() {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
@@ -63,21 +63,26 @@ function getJSON() {
 }
 getJSON()
 
+var judge1 = false
+var judge2 = false
+var judge3 = false
+var judge4 = false
+
 class Note {
-	constructor(sec,casen) {
+	constructor(sec,casen,i) {
         var xy = 0
+        this.num = i
         this.cases = casen
         this.delete = false
         this.end = false
+        this.cnt
+        this.cntend
         context.beginPath();
         this.xz = (canvas.height*490/540) - (sec * speed * 60)
         context.rect(xy, this.xz, (canvas.width*5/96), (canvas.width*1/54));
         context.fillStyle = "#0095DD";
         context.fill();
         context.closePath();
-    }
-    move(x) {
-        this.xz = this.xz + x;
     }
     draw(){
         if(this.xz <= canvas.height ){
@@ -95,7 +100,6 @@ class Note {
             if(this.cases == 4){
                 xy = pos4
             }
-            var color = "#0095DD";
             if(this.xz > 0 && this.xz <= (canvas.height*505/540) && this.cases == 1&& this.delete == false){
                 trueball1.push(this)
             }
@@ -109,65 +113,184 @@ class Note {
                 trueball4.push(this)
             }
             if((this.xz < (canvas.height*540/540) || this.xz > -(canvas.height*50/540))&& this.delete == false){
-            context.beginPath();
-            context.rect(xy-(canvas.width*30/960), this.xz,(canvas.width*60/960) ,(canvas.height*20/540));
-            context.fillStyle = "#00ff00"
-            context.fill();
-            context.closePath();
+                context.beginPath();
+                context.rect(xy-(canvas.width*30/960), this.xz,(canvas.width*60/960) ,(canvas.height*20/540));
+                context.fillStyle = "#00ff00"
+                context.fill();
+                context.closePath();
             }
         }else if(this.xz > canvas.height && this.end != true && this.delete != true){
             miss++
             combo = 0
+            if(this.cases == 1){
+                judge1 = this.num
+            }else if(this.cases == 2){
+                judge2 = this.num
+            }else if(this.cases == 3){
+                judge3 = this.num
+            }else if(this.cases == 4){
+                judge4 = this.num
+            }
             this.end = true
+            this.cnt = cnt
+            this.cntend = cnt + 30
         }
     }
 }
 
+class Judge {
+	constructor() {
+        // var text = "Miss"
+        // var size = (canvas.width*100/960)
+        // context.font = size+"px serif";
+        // context.globalAlpha = 0.4;
+        // context.fillStyle = "white";
+        // context.fillText(text,canvas.width/3, (canvas.height*400/540));
+    }
+    draw(){
+        if(judge1 === false){
+        }else{
+            if(notes[judge1].end == true && notes[judge1].cnt != notes[judge1].cntend && notes[judge1].delete != true){
+                let text = "Miss1"
+                let size = (canvas.width*30/960)
+                notes[judge1].cnt = notes[judge1].cnt + 1
+                context.font = size+"px serif";
+                let textWidth1 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*237-textWidth1/2, (canvas.height*450/540));
+            }else if(notes[judge1].end == true && notes[judge1].cnt != notes[judge1].cntend && notes[judge1].delete == true){
+                let text = "Good1"
+                let size = (canvas.width*30/960)
+                notes[judge1].cnt = notes[judge1].cnt + 1
+                context.font = size+"px serif";
+                let textWidth1 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*237-textWidth1/2, (canvas.height*450/540));
+            }
+        }
+        if(judge2 === false){
+        }else{
+            if(notes[judge2].end == true && notes[judge2].cnt != notes[judge2].cntend && notes[judge1].delete != true){
+                let text = "Miss2"
+                let size = (canvas.width*30/960)
+                notes[judge2].cnt = notes[judge2].cnt + 1
+                context.font = size+"px serif";
+                let textWidth2 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*399-textWidth2/2, (canvas.height*450/540));
+            }else if(notes[judge2].end == true && notes[judge2].cnt != notes[judge2].cntend && notes[judge2].delete == true){
+                let text = "Good2"
+                let size = (canvas.width*30/960)
+                notes[judge2].cnt = notes[judge2].cnt + 1
+                context.font = size+"px serif";
+                let textWidth2 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*399-textWidth2/2, (canvas.height*450/540));
+            }
+        }
+        if(judge3 === false){
+        }else{
+            if(notes[judge3].end == true && notes[judge3].cnt != notes[judge3].cntend && notes[judge3].delete != true){
+                let text = "Miss" + notes[judge3].num
+                let size = (canvas.width*30/960)
+                notes[judge3].cnt = notes[judge3].cnt + 1
+                context.font = size+"px serif";
+                let textWidth3 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*561-textWidth3/2, (canvas.height*450/540));
+            }else if(notes[judge3].end == true && notes[judge3].cnt != notes[judge3].cntend && notes[judge3].delete == true){
+                let text = "Good" + notes[judge3].num
+                let size = (canvas.width*30/960)
+                notes[judge3].cnt = notes[judge3].cnt + 1
+                context.font = size+"px serif";
+                let textWidth3 = context.measureText( text ).width ;
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*561-textWidth3/2, (canvas.height*450/540));
+            }
+        }
+        if(judge4 === false){
+        }else{
+            if(notes[judge4].end == true && notes[judge4].cnt != notes[judge4].cntend && notes[judge4].delete != true){
+                let text = "Miss" + notes[judge4].num
+                let size = (canvas.width*30/960)
+                notes[judge4].cnt = notes[judge4].cnt + 1
+                context.font = size+"px serif";
+                let textWidth4 = context.measureText( text ).width ;
+
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*723-textWidth4/2, (canvas.height*450/540));
+            }else if(notes[judge4].end == true && notes[judge4].cnt != notes[judge4].cntend && notes[judge4].delete == true){
+                let text = "Good" + notes[judge4].num
+                let size = (canvas.width*30/960)
+                notes[judge4].cnt = notes[judge4].cnt + 1
+                context.font = size+"px serif";
+                let textWidth4 = context.measureText( text ).width ;
+
+                context.globalAlpha = 0.4;
+                context.fillStyle = "white";
+                context.fillText(text,canvas.width/960*723-textWidth4/2, (canvas.height*450/540));
+            }
+        }
+
+    }
+}
 var ya
 var can
 var notes = Array();
+var judge = Array();
 function make(){
     for(var i = 0;i < datas.length;i++) {
         ya = datas[i]["second"]
         can = datas[i]["cases"]
 
-        this.notes[i] = new Note(ya,can);
+        this.notes[i] = new Note(ya,can,i);
     }
 }
-
-function drawmoji() {
-    if(combo  === 0){
-        let text = "Miss"
-        let size = (canvas.width*100/960)
-        let textWidth = context.measureText( text ).width ;
-        context.font = size+"px serif";
-        context.globalAlpha = 0.4;
-        context.fillStyle = "white";
-        context.fillText(text,(canvas.width - textWidth)/2 , (canvas.height*300/540));
-    }else if(combo > 0){
-        let text = "combo"+combo
-        let size = (canvas.width*100/960)
-        let textWidth = context.measureText( text ).width ;
-        context.font = size+"px serif";
-        context.globalAlpha = 0.4;
-        context.fillStyle = "white";
-        context.fillText(text,(canvas.width - textWidth)/2 , (canvas.height*300/540));
-    }
-}
-
-
 function raka(){
     if(notes.length != 0){
         for(var i = 0;i < datas.length;i++) {
             this.notes[i].draw()
+            // this.notes[i].judge()
         }
     }   
 
 }
+
+function makemoji(){
+    for(var i = 0;i < 1;i++) {
+        this.judge[i] = new Judge();
+    }
+}
+
+function making(){
+    for(var i = 0;i < 1;i++) {
+        this.judge[i].draw()
+    }
+}
+function drawmoji() {
+    let text = "combo "+combo
+    let size = (canvas.width*100/960)
+    context.font = size+"px serif";
+    let textWidth = context.measureText( text ).width ;
+
+    context.globalAlpha = 0.4;
+    context.fillStyle = "white";
+    context.fillText(text,(canvas.width - textWidth)/2 , (canvas.height*300/540));
+}
+
+
 function init() {
     cnt = 0;
     by = 0;
     make()
+    makemoji()
     draw()
 }
 function draw() {
@@ -323,6 +446,7 @@ function main() {
     raka()
     cnt++
     drawmoji()
+    making()
 }
 
 var keytrue1 = false
@@ -337,7 +461,6 @@ startb.addEventListener("click", function() {
 })
 document.onkeydown = pressFunction;
 function pressFunction(e){
-    // console.log(cnt/60+10)
   if(e.keyCode == 68)
   {
     if(trueball1.length != 0 && keytrue1 != true){
@@ -345,6 +468,10 @@ function pressFunction(e){
             trueball1[0].delete = true
             good1 = true
             combo = combo+1
+            judge1 = trueball1[0].num
+            trueball1[0].end = true
+            trueball1[0].cnt = cnt
+            trueball1[0].cntend = cnt + 30
         }
     }
     keytrue1 = true
@@ -357,6 +484,10 @@ function pressFunction(e){
             trueball2[0].delete = true
             good2 = true
             combo = combo+1
+            judge2 = trueball2[0].num
+            trueball2[0].end = true
+            trueball2[0].cnt = cnt
+            trueball2[0].cntend = cnt + 30
         }
     }
     keytrue2 = true
@@ -370,6 +501,10 @@ function pressFunction(e){
             trueball3[0].delete = true
             good3 = true
             combo = combo+1
+            judge3 = trueball3[0].num
+            trueball3[0].end = true
+            trueball3[0].cnt = cnt
+            trueball3[0].cntend = cnt + 30
         }
     }
     keytrue3 = true
@@ -383,6 +518,10 @@ function pressFunction(e){
             trueball4[0].delete = true
             good4 = true
             combo = combo+1
+            judge4 = trueball4[0].num
+            trueball4[0].end = true
+            trueball4[0].cnt = cnt
+            trueball4[0].cntend = cnt + 30
         }
     }
     keytrue4 = true
@@ -477,6 +616,10 @@ if(sp === true){
                   trueball1[0].delete = true
                   good1 = true
                   combo = combo+1
+                  judge1 = trueball1[0].num
+                  trueball1[0].end = true
+                  trueball1[0].cnt = cnt
+                  trueball1[0].cntend = cnt + 30
               }
           }
           keytrue1 = true
@@ -489,6 +632,10 @@ if(sp === true){
                   trueball2[0].delete = true
                   good2 = true
                   combo = combo+1
+                  judge2 = trueball2[0].num
+                  trueball2[0].end = true
+                  trueball2[0].cnt = cnt
+                  trueball2[0].cntend = cnt + 30
               }
           }
           keytrue2 = true
@@ -502,6 +649,10 @@ if(sp === true){
                   trueball3[0].delete = true
                   good3 = true
                   combo = combo+1
+                  judge3 = trueball3[0].num
+                  trueball3[0].end = true
+                  trueball3[0].cnt = cnt
+                  trueball3[0].cntend = cnt + 30
               }
           }
           keytrue3 = true
@@ -515,6 +666,10 @@ if(sp === true){
                   trueball4[0].delete = true
                   good4 = true
                   combo = combo+1
+                  judge4 = trueball4[0].num
+                  trueball4[0].end = true
+                  trueball4[0].cnt = cnt
+                  trueball4[0].cntend = cnt + 30
               }
           }
           keytrue4 = true
