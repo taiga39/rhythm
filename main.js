@@ -151,90 +151,90 @@ class Judge {
         if(judge1 === false){
         }else{
             if(notes[judge1].end == true && notes[judge1].cnt != notes[judge1].cntend && notes[judge1].delete != true){
-                let text = "Miss1"
+                let text = "Miss"
                 let size = (canvas.width*30/960)
                 notes[judge1].cnt = notes[judge1].cnt + 1
                 context.font = size+"px serif";
                 let textWidth1 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "red";
                 context.fillText(text,canvas.width/960*237-textWidth1/2, (canvas.height*450/540));
             }else if(notes[judge1].end == true && notes[judge1].cnt != notes[judge1].cntend && notes[judge1].delete == true){
-                let text = "Good1"
+                let text = "Good"
                 let size = (canvas.width*30/960)
                 notes[judge1].cnt = notes[judge1].cnt + 1
                 context.font = size+"px serif";
                 let textWidth1 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "yellow";
                 context.fillText(text,canvas.width/960*237-textWidth1/2, (canvas.height*450/540));
             }
         }
         if(judge2 === false){
         }else{
             if(notes[judge2].end == true && notes[judge2].cnt != notes[judge2].cntend && notes[judge1].delete != true){
-                let text = "Miss2"
+                let text = "Miss"
                 let size = (canvas.width*30/960)
                 notes[judge2].cnt = notes[judge2].cnt + 1
                 context.font = size+"px serif";
                 let textWidth2 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "red";
                 context.fillText(text,canvas.width/960*399-textWidth2/2, (canvas.height*450/540));
             }else if(notes[judge2].end == true && notes[judge2].cnt != notes[judge2].cntend && notes[judge2].delete == true){
-                let text = "Good2"
+                let text = "Good"
                 let size = (canvas.width*30/960)
                 notes[judge2].cnt = notes[judge2].cnt + 1
                 context.font = size+"px serif";
                 let textWidth2 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "yellow";
                 context.fillText(text,canvas.width/960*399-textWidth2/2, (canvas.height*450/540));
             }
         }
         if(judge3 === false){
         }else{
             if(notes[judge3].end == true && notes[judge3].cnt != notes[judge3].cntend && notes[judge3].delete != true){
-                let text = "Miss" + notes[judge3].num
+                let text = "Miss"
                 let size = (canvas.width*30/960)
                 notes[judge3].cnt = notes[judge3].cnt + 1
                 context.font = size+"px serif";
                 let textWidth3 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "red";
                 context.fillText(text,canvas.width/960*561-textWidth3/2, (canvas.height*450/540));
             }else if(notes[judge3].end == true && notes[judge3].cnt != notes[judge3].cntend && notes[judge3].delete == true){
-                let text = "Good" + notes[judge3].num
+                let text = "Good"
                 let size = (canvas.width*30/960)
                 notes[judge3].cnt = notes[judge3].cnt + 1
                 context.font = size+"px serif";
                 let textWidth3 = context.measureText( text ).width ;
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "yellow";
                 context.fillText(text,canvas.width/960*561-textWidth3/2, (canvas.height*450/540));
             }
         }
         if(judge4 === false){
         }else{
             if(notes[judge4].end == true && notes[judge4].cnt != notes[judge4].cntend && notes[judge4].delete != true){
-                let text = "Miss" + notes[judge4].num
+                let text = "Miss"
                 let size = (canvas.width*30/960)
                 notes[judge4].cnt = notes[judge4].cnt + 1
                 context.font = size+"px serif";
                 let textWidth4 = context.measureText( text ).width ;
 
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "red";
                 context.fillText(text,canvas.width/960*723-textWidth4/2, (canvas.height*450/540));
             }else if(notes[judge4].end == true && notes[judge4].cnt != notes[judge4].cntend && notes[judge4].delete == true){
-                let text = "Good" + notes[judge4].num
+                let text = "Good"
                 let size = (canvas.width*30/960)
                 notes[judge4].cnt = notes[judge4].cnt + 1
                 context.font = size+"px serif";
                 let textWidth4 = context.measureText( text ).width ;
 
                 context.globalAlpha = 0.4;
-                context.fillStyle = "white";
+                context.fillStyle = "yellow";
                 context.fillText(text,canvas.width/960*723-textWidth4/2, (canvas.height*450/540));
             }
         }
@@ -461,6 +461,7 @@ startb.addEventListener("click", function() {
 })
 document.onkeydown = pressFunction;
 function pressFunction(e){
+    console.log(cnt/60)
   if(e.keyCode == 68)
   {
     if(trueball1.length != 0 && keytrue1 != true){
